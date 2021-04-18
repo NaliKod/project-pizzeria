@@ -85,11 +85,15 @@
         event.preventDefault();
         /* find active product(product that has active class) */
         const activeProduct = document.querySelector(classNames.menuProduct.wrapperActive);
+        console.log('activeProduct',activeProduct);
         /* if there is active product and it's not thisProduct */
-        if (activeProduct != thisProduct) {
-          /* toggle active class on thisProduct,element */
-          thisProduct.element.classList.toggle('active');
+        if (activeProduct!=null && activeProduct != thisProduct.element) {
+          thisProduct.element.classList.remove('active');
+          console.log('if block thisProduct',thisProduct);
         }
+        /* toggle active class on thisProduct,element */
+        thisProduct.element.classList.toggle('active');
+        console.log('thisProduct',thisProduct);
       });
     }
   }
