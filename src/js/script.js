@@ -36,7 +36,7 @@
   const classNames = {
     menuProduct: {
       wrapperActive: '.active',
-      imageVisible: 'active',
+      imageVisible: '.active',
     },
   };
 
@@ -79,7 +79,8 @@
 
     getElements() {
       const thisProduct = this;
-
+     
+      //thisProduct.imageWrapper = thisProduct.querySelector(select.menuProduct.imageWrapper);
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
       console.log('thisProduct.accordionTrigger', thisProduct.accordionTrigger);
       thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
@@ -148,7 +149,7 @@
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        //console.log(paramId, param);
+        console.log(paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
@@ -156,15 +157,14 @@
           const option = param.options[optionId];
           console.log(optionId, option);
 
-          if (formData.param) {
-            if (formData.includes(option)) {
-              if (option.default) {
+        
+          if (formData[paramId]) {
+            if (formData[paramId].includes(optionId)) {
+              if (optionId.default) {
                 price = price - option.price;
-                console.log('1',price);
               }
-              else if (!option.default) {
+              else if (!optionId.default) {
                 price = price + option.price;
-                console.log('2',price);
               }
             }
           }
