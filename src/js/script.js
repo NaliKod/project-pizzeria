@@ -108,7 +108,7 @@
         console.log('activeProduct', activeProduct);
         /* if there is active product and it's not thisProduct */
         if (activeProduct != null && activeProduct != thisProduct.element) {
-          thisProduct.element.classList.remove('active');
+          activeProduct.classList.remove('active');
           console.log('if block thisProduct', thisProduct);
         }
         /* toggle active class on thisProduct,element */
