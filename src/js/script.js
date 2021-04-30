@@ -54,7 +54,7 @@
 
   const classNames = {
     menuProduct: {
-      wrapperActive: '.active',
+      wrapperActive: '.product.active',
       imageVisible: '.active',
     },
     cart: {
@@ -136,12 +136,14 @@
         /*prevent default action for event*/
         event.preventDefault();
         /* find active product(product that has active class) */
-        const activeProduct = document.querySelector(classNames.menuProduct.wrapperActive);
-        console.log('activeProduct', activeProduct);
+        const activeProducts = document.querySelectorAll(classNames.menuProduct.wrapperActive);
+        console.log('activeProducts', activeProducts);
         /* if there is active product and it's not thisProduct */
-        if (activeProduct != null && activeProduct != thisProduct.element) {
-          activeProduct.classList.remove('active');
-          console.log('if block thisProduct', thisProduct);
+        for (const activeProduct of activeProducts) {
+          if (activeProduct != null && activeProduct != thisProduct.element) {
+            activeProduct.classList.remove('active');
+            console.log('if block thisProduct', thisProduct);
+          }
         }
         /* toggle active class on thisProduct,element */
         thisProduct.element.classList.toggle('active');
@@ -257,15 +259,22 @@
           options: {}
         };
 
-        // for every option in this category
-        for (let optionId in param.options) {
-          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
-          const option = param.options[optionId];
-          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          if (optionSelected) {
-            params[paramId].options = {
-              [optionId]: option.label,
-            };
+        if (paramId) {
+          const opt = [];
+
+          // for every option in this category
+          for (let optionId in param.options) {
+            // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+            const option = param.options[optionId];
+
+            const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+            if (optionSelected) {
+              params[paramId].options={
+                c:opt.push(option.label),
+              };
+              console.log('opt',opt);
+              console.log('option.lable',option.label);
+            }
           }
         }
       }
@@ -351,7 +360,6 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
-      thisCart.remove(element);
 
       console.log('new Cart', thisCart);
     }
@@ -423,9 +431,8 @@
       }
     }
 
-    remove(thisCartProduct) {
+    remove() {
       const thisCart = this;
-      thisCart.dom.productList.remove(thisCartProduct);
       console.log(' thisCart.dom.productList', thisCart.dom.productList);
       const indexOfProduct = thisCart.products.indexOf('thisCartProduct');
       thisCart.products.splice(indexOfProduct, 1);
@@ -482,6 +489,7 @@
         },
       });
       thisCartProduct.dom.wrapper.dispatchEvent(event);
+      thisCartProduct.dom.wrapper.remove();
     }
 
     initActions() {
@@ -539,3 +547,4 @@
 
   app.init();
 }
+ 
