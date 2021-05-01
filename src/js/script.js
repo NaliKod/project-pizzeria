@@ -71,6 +71,11 @@
     cart: {
       defaultDeliveryFee: 20,
     },
+    db: {
+      url: '//localhost:3131',
+      products: 'products',
+      orders: 'orders',
+    },
   };
 
   const templates = {
@@ -260,7 +265,7 @@
         };
 
         if (paramId) {
-          const opt = [];
+          const options = [''];
 
           // for every option in this category
           for (let optionId in param.options) {
@@ -269,11 +274,8 @@
 
             const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
             if (optionSelected) {
-              params[paramId].options={
-                c:opt.push(option.label),
-              };
-              console.log('opt',opt);
-              console.log('option.lable',option.label);
+              params[paramId].options = { [optionId]: option.label };
+              console.log('options', options);
             }
           }
         }
@@ -511,7 +513,8 @@
       const thisApp = this;
       console.log('thisApp.data', thisApp.data);
       for (let productData in thisApp.data.products) {
-        new Product(productData, thisApp.data.products[productData]);
+        //new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
       //const testProduct = new Product();
       //console.
@@ -521,7 +524,17 @@
 
     initData: function () {
       const thisApp = this;
-      thisApp.data = dataSource;
+      //thisApp.data = dataSource;
+      thisApp.data = {};
+      const url = settings.db.url + '/' + settings.db.products;
+      fetch(url)
+        .then(function (rawResponse) {
+          return rawResponse.json();
+        })
+        .then(function (parsedResponse) {
+          console.log('parsedResponse', parsedResponse);
+        });
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 
     initCart: function () {
@@ -539,7 +552,7 @@
       console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
+      // thisApp.initMenu();
       thisApp.initCart();
 
     },
@@ -547,4 +560,3 @@
 
   app.init();
 }
- 
