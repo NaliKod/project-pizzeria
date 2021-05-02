@@ -274,7 +274,7 @@
 
             const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
             if (optionSelected) {
-              params[paramId].options = { [optionId]: option.label };
+              params[paramId].options.push = { [optionId]: option.label };
               console.log('options', options);
             }
           }
@@ -376,6 +376,9 @@
       thisCart.dom.subTotalPrice = document.querySelector(select.cart.subtotalPrice);
       thisCart.dom.totalPrice = document.querySelector(select.cart.totalPrice);
       thisCart.dom.totalNumber = document.querySelector(select.cart.totalNumber);
+      thisCart.dom.form = document.querySelector(select.cart.form);
+      thisCart.dom.phone = document.querySelector(select.cart.phone);
+      thisCart.dom.address = document.querySelector(select.cart.address);
     }
 
     initActions() {
@@ -390,6 +393,11 @@
 
       thisCart.dom.productList.addEventListener('remove', function (event) {
         thisCart.remove(event.detail.cartProduct);
+      });
+
+      thisCart.dom.form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -415,18 +423,18 @@
     update() {
       const thisCart = this;
       const deliveryFee = settings.cart.defaultDeliveryFee;
-      let totalNumber = 0;
-      let subTotalPrice = 0;
+      thisCart.totalNumber = 0;
+      thisCart.subTotalPrice = 0;
 
       for (const product of thisCart.products) {
-        totalNumber += product.amount;
-        subTotalPrice += product.price;
-        console.log('totalNumber,subTotalPrice :', totalNumber, subTotalPrice);
+        thisCart.totalNumber += product.amount;
+        thisCart.subTotalPrice += product.price;
+        console.log('totalNumber,subTotalPrice :', thisCart.totalNumber, thisCart.subTotalPrice);
       }
-      thisCart.dom.totalNumber.innerHTML = totalNumber;
-      thisCart.dom.subTotalPrice.innerHTML = subTotalPrice;
+      thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
+      thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
       if (thisCart.products !== null) {
-        thisCart.totalPrice = deliveryFee + subTotalPrice;
+        thisCart.totalPrice = deliveryFee + thisCart.subTotalPrice;
         thisCart.dom.deliveryFee.innerHTML = deliveryFee;
         thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
         console.log('thisCart.totalPrice', thisCart.totalPrice);
@@ -441,6 +449,34 @@
       thisCart.update();
       console.log('thisCart.update();', thisCart.update());
     }
+    sendOrder() {
+      const thisCart = this;
+      const url = settings.db.url + '/' + settings.db.orders;
+      let payload = {
+        address: thisCart.dom.address.value,
+        phone: thisCart.dom.phone.value,
+        totalPrice: thisCart.totalPrice,
+        subTotalPrice: thisCart.subTotalPrice,
+        totalNumber: thisCart.totalNumber,
+        deliveryFee: settings.cart.defaultDeliveryFee,
+        products: [],
+      };
+
+      for (let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options);
+    }
+
   }
 
   class CartProduct {
@@ -503,6 +539,19 @@
         console.log('remove', thisCartProduct.remove());
       });
     }
+
+    getData() {
+      const thisCartProduct = this;
+      const cartProducts = {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        name: thisCartProduct.name,
+        params: thisCartProduct.params,
+      };
+      return cartProducts;
+    }
   }
 
 
@@ -533,6 +582,8 @@
         })
         .then(function (parsedResponse) {
           console.log('parsedResponse', parsedResponse);
+          thisApp.data.products = parsedResponse;
+          thisApp.initMenu();
         });
       console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
