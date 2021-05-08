@@ -265,7 +265,7 @@
         };
 
         if (paramId) {
-          const options = [''];
+          const options = [];
 
           // for every option in this category
           for (let optionId in param.options) {
@@ -274,7 +274,7 @@
 
             const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
             if (optionSelected) {
-              params[paramId].options.push = { [optionId]: option.label };
+              params[paramId].options[optionId]= option.label;
               console.log('options', options);
             }
           }
