@@ -25,6 +25,8 @@ class CartProduct {
     thisCartProduct.dom.price = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.price);
     thisCartProduct.dom.edit = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.edit);
     thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
+    thisCartProduct.dom.totalPriceSum = document.querySelector(select.cart.totalPriceSum);
+    thisCartProduct.dom.totalPrice = document.querySelector(select.cart.totalPrice);
   }
 
   initAmountWidget() {
@@ -60,6 +62,8 @@ class CartProduct {
     thisCartProduct.dom.remove.addEventListener('click', function () {
       thisCartProduct.remove();
       console.log('remove', thisCartProduct.remove());
+      thisCartProduct.dom.totalPrice.innerHTML = '$'+0;
+      thisCartProduct.dom.totalPriceSum.innerHTML = 0;
     });
   }
 

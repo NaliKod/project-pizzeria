@@ -169,7 +169,7 @@ class Product {
         product: thisProduct.prepareCartProduct(),
       },
     });
-    thisProduct.element.dispachEvent(event);
+    thisProduct.element.dispatchEvent(event);
   }
 
 
