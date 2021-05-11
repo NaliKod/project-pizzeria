@@ -107,7 +107,7 @@ class Cart {
       totalPrice: thisCart.totalPrice,
       subTotalPrice: thisCart.subTotalPrice,
       totalNumber: thisCart.totalNumber,
-      deliveryFee: settings.cart.defaultDeliveryFee,
+      deliveryFee: settings.cart.defaultDeliveryFee, 
       products: [],
     };
 

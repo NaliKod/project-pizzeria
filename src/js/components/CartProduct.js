@@ -38,7 +38,6 @@ class CartProduct {
       const price = thisCartProduct.price;
       // update calculated price in the HTML
       thisCartProduct.dom.price.innerHTML = price;
-
     });
   }
 
