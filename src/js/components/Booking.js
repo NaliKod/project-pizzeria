@@ -5,7 +5,7 @@ import DatePicker from '../components/DatePicker.js';
 import HourPicker from '../components/HourPicker.js';
 
 class Booking {
-  constructor(element,table) {
+  constructor(element, table) {
     const thisBooking = this;
     console.log('thisBooking', thisBooking);
     thisBooking.table = table;
@@ -21,7 +21,7 @@ class Booking {
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.dataPicker.maxDate);
 
     const params = {
-      bookings: [
+      booking: [
         startDateParam,
         endDateParam,
       ],
@@ -39,8 +39,8 @@ class Booking {
     console.log('getData params', params);
 
     const urls = {
-      bookings: settings.db.url + '/' + settings.db.booking
-        + '?' + params.bookings.join('&'),
+      booking: settings.db.url + '/' + settings.db.booking
+        + '?' + params.booking.join('&'),
       eventsCurrent: settings.db.url + '/' + settings.db.event
         + '?' + params.eventsCurrent.join('&'),
       eventsRepeat: settings.db.url + '/' + settings.db.event
@@ -49,7 +49,7 @@ class Booking {
     console.log('urls', urls);
 
     Promise.all([
-      fetch(urls.bookings),
+      fetch(urls.booking),
       fetch(urls.eventsCurrent),
       fetch(urls.eventsRepeat),
     ])
@@ -162,7 +162,7 @@ class Booking {
     thisWidget.dom.dataPicker = document.querySelector(select.widgets.datePicker.wrapper);
     thisWidget.dom.hourPicker = document.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
-    thisBooking.dom.table = document.querySelector(select.booking.tables);
+    thisBooking.dom.table = document.querySelector(select.booking.table);
   }
 
   initWidgets() {
