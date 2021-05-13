@@ -5,9 +5,10 @@ import DatePicker from '../components/DatePicker.js';
 import HourPicker from '../components/HourPicker.js';
 
 class Booking {
-  constructor(element) {
+  constructor(element,table) {
     const thisBooking = this;
     console.log('thisBooking', thisBooking);
+    thisBooking.table = table;
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -160,7 +161,8 @@ class Booking {
     const thisWidget = this;
     thisWidget.dom.dataPicker = document.querySelector(select.widgets.datePicker.wrapper);
     thisWidget.dom.hourPicker = document.querySelector(select.widgets.hourPicker.wrapper);
-    thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
+    thisBooking.dom.table = document.querySelector(select.booking.tables);
   }
 
   initWidgets() {
