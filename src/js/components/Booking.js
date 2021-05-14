@@ -5,10 +5,10 @@ import DatePicker from '../components/DatePicker.js';
 import HourPicker from '../components/HourPicker.js';
 
 class Booking {
-  constructor(element, table) {
+  constructor(element) {
     const thisBooking = this;
     console.log('thisBooking', thisBooking);
-    thisBooking.table = table;
+    thisBooking.table = {};
     thisBooking.render(element);
     thisBooking.initWidgets();
     thisBooking.getData();
@@ -116,13 +116,12 @@ class Booking {
 
   updateDOM() {
     const thisBooking = this;
-    thisBooking.date = thisBooking.datePicker.value;
+    thisBooking.date = thisBooking.dataPicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
     let allAvailable = false;
 
-    if (typeof thisBooking.booked[thisBooking.date] == 'undefined'
-      ||
+    if (typeof thisBooking.booked[thisBooking.date] == 'undefined' ||
       typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined') {
       allAvailable = true;
     }
@@ -163,6 +162,8 @@ class Booking {
     thisWidget.dom.hourPicker = document.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
     thisBooking.dom.table = document.querySelector(select.booking.table);
+    console.log('table',thisBooking.dom.table);
+    thisBooking.dom.floor - document.querySelector(select.booking.floor);
   }
 
   initWidgets() {
@@ -183,7 +184,25 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function () {
       thisBooking.updateDOM();
     });
+    thisBooking.dom.tables.addEventListener('click', function(event) {
+      event.preventDefault();
+      thisBooking.initTables(event);
+    });
   }
+  initTables(event) {
+    const thisBooking = this;
+    if (event.target.offsetParent.classList.contains('table')) {
+      if (!event.target.offsetParent.classList.contains(classNames.booking.tableBooked) && 
+      !event.target.offsetParent.classList.contains('table')) {
+        event.target.offsetParent.classList.add(classNames.booking.tableSelected);
+        thisBooking.table = event.target.offsetParent.getAttribute(settings.booking.tableIdAttribute);
+      }
+      else {
+        event.target.offsetParent.remove(classNames.booking.tableSelected);
+      }
+    }
+  }
+
 }
 
 export default Booking;
