@@ -162,8 +162,8 @@ class Booking {
     thisWidget.dom.hourPicker = document.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
     thisBooking.dom.table = document.querySelector(select.booking.table);
-    console.log('table',thisBooking.dom.table);
-    thisBooking.dom.floor - document.querySelector(select.booking.floor);
+    console.log('table', thisBooking.dom.table);
+    thisBooking.dom.floor = document.querySelector(select.booking.floor);
   }
 
   initWidgets() {
@@ -181,24 +181,38 @@ class Booking {
     thisWidget.dataPicker = new DatePicker(thisWidget.dom.dataPicker);
     thisWidget.hourPicker = new HourPicker(thisWidget.dom.hourPicker);
 
-    thisBooking.dom.wrapper.addEventListener('updated', function () {
+    thisBooking.dom.wrapper.addEventListener('updated', function (event) {
+      if (!event.target.classList.contains('table')) {
+        for (let tableId of thisBooking.dom.tables) {
+          if (tableId.getAttribute(settings.booking.tableIdAttribute) == thisBooking.table) {
+            tableId.classList.remove(classNames.booking.tableSelected);
+          }
+        }
+      }
       thisBooking.updateDOM();
     });
-    thisBooking.dom.tables.addEventListener('click', function(event) {
+
+    thisBooking.dom.floor.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.initTables(event);
     });
   }
   initTables(event) {
     const thisBooking = this;
-    if (event.target.offsetParent.classList.contains('table')) {
-      if (!event.target.offsetParent.classList.contains(classNames.booking.tableBooked) && 
-      !event.target.offsetParent.classList.contains('table')) {
-        event.target.offsetParent.classList.add(classNames.booking.tableSelected);
-        thisBooking.table = event.target.offsetParent.getAttribute(settings.booking.tableIdAttribute);
+    if (event.target.classList.contains('table')) {
+      if (!event.target.classList.contains(classNames.booking.tableBooked) &&
+        !event.target.classList.contains(classNames.booking.tableSelected)) {
+        event.target.classList.add(classNames.booking.tableSelected);
+        thisBooking.table = event.target.getAttribute(settings.booking.tableIdAttribute);
+        for (let tableId of thisBooking.dom.tables) {
+          if (tableId.getAttribute(settings.booking.tableIdAttribute) != thisBooking.table) {
+            tableId.classList.remove(classNames.booking.tableSelected);
+          }
+        }
+
       }
       else {
-        event.target.offsetParent.remove(classNames.booking.tableSelected);
+        event.target.classList.remove(classNames.booking.tableSelected);
       }
     }
   }
