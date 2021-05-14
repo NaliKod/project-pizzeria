@@ -209,11 +209,13 @@ class Booking {
             tableId.classList.remove(classNames.booking.tableSelected);
           }
         }
-
       }
       else {
         event.target.classList.remove(classNames.booking.tableSelected);
       }
+    }
+    else if(event.target.classList.contains(classNames.booking.tableBooked)){
+      //alter('This table is already booked');
     }
   }
 
