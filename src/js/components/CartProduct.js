@@ -14,7 +14,7 @@ class CartProduct {
     thisCartProduct.initAmountWidget();
     thisCartProduct.initActions();
 
-    console.log('thisCartProduct', thisCartProduct);
+    //console.log('thisCartProduct', thisCartProduct);
   }
 
   getElements(element) {
@@ -60,7 +60,7 @@ class CartProduct {
     });
     thisCartProduct.dom.remove.addEventListener('click', function () {
       thisCartProduct.remove();
-      console.log('remove', thisCartProduct.remove());
+      //console.log('remove', thisCartProduct.remove());
       thisCartProduct.dom.totalPrice.innerHTML = '$'+0;
       thisCartProduct.dom.totalPriceSum.innerHTML = 0;
     });

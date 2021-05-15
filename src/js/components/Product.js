@@ -33,7 +33,7 @@ class Product {
     const thisProduct = this;
 
     thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-    console.log('imageWrapper', thisProduct.imageWrapper);
+    //console.log('imageWrapper', thisProduct.imageWrapper);
     thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
     //console.log('thisProduct.accordionTrigger', thisProduct.accordionTrigger);
     thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
@@ -60,17 +60,17 @@ class Product {
       event.preventDefault();
       /* find active product(product that has active class) */
       const activeProducts = document.querySelectorAll(classNames.menuProduct.wrapperActive);
-      console.log('activeProducts', activeProducts);
+      //console.log('activeProducts', activeProducts);
       /* if there is active product and it's not thisProduct */
       for (const activeProduct of activeProducts) {
         if (activeProduct != null && activeProduct != thisProduct.element) {
           activeProduct.classList.remove('active');
-          console.log('if block thisProduct', thisProduct);
+          //console.log('if block thisProduct', thisProduct);
         }
       }
       /* toggle active class on thisProduct,element */
       thisProduct.element.classList.toggle('active');
-      console.log('thisProduct', thisProduct);
+      //console.log('thisProduct', thisProduct);
     });
   }
   initOrderForm() {
@@ -99,7 +99,7 @@ class Product {
 
     // covert form to object structure e.g. { sauce: ['tomato'], toppings: ['olives', 'redPeppers']}
     const formData = utils.serializeFormToObject(thisProduct.form);
-    console.log('formData', formData);
+    //console.log('formData', formData);
 
     // set price to default price
     let price = thisProduct.data.price;
@@ -154,7 +154,7 @@ class Product {
     thisProduct.amountWidgetElem.addEventListener('updated', function (event) {
       event.preventDefault();
       thisProduct.processOrder();
-      console.log('initAmountWidegt', thisProduct.amountWidget);
+      //console.log('initAmountWidegt', thisProduct.amountWidget);
     });
   }
 
@@ -219,7 +219,7 @@ class Product {
       priceSingle: thisProduct.priceSingle,
       params: thisProduct.prepareCartProductParams(),
     };
-    console.log('productSummary', productSummary);
+    //console.log('productSummary', productSummary);
     return productSummary;
   }
 }

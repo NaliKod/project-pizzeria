@@ -65,6 +65,11 @@ export const select = {
     tables: '.floor-plan .table',
     table: '.object.table',
     floor: '.floor-plan',
+    phone: '[name="phone"]',
+    address: '[name="address"]',
+    starter: '.checkbox',
+    form: '.order-confirmation',
+    formSubmit: '.order-confirmation [type="submit"]',
   },
   nav: {
     links: '.main-nav a',

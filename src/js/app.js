@@ -24,7 +24,7 @@ const app = {
 
     //thisApp.activatePage(thisApp.pages[0].id);
     //thisApp.activatePage(idFromHash);
-    console.log('pageMatchingHash', pageMatchingHash);
+    //console.log('pageMatchingHash', pageMatchingHash);
     thisApp.activatePage(pageMatchingHash);
 
     for (let link of thisApp.navLinks) {
@@ -87,7 +87,7 @@ const app = {
         return rawResponse.json();
       })
       .then(function (parsedResponse) {
-        console.log('parsedResponse', parsedResponse);
+        //console.log('parsedResponse', parsedResponse);
         thisApp.data.products = parsedResponse;
         thisApp.initMenu();
       });
@@ -109,9 +109,9 @@ const app = {
   init: function () {
     const thisApp = this;
     console.log('*** App starting ***');
-    console.log('thisApp:', thisApp);
-    console.log('classNames:', classNames);
-    console.log('settings:', settings);
+    //console.log('thisApp:', thisApp);
+    //console.log('classNames:', classNames);
+    //console.log('settings:', settings);
     console.log('templates:', templates);
 
     thisApp.initPages();

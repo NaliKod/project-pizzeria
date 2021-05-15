@@ -10,7 +10,7 @@ class Cart {
     thisCart.getElements(element);
     thisCart.initActions();
 
-    console.log('new Cart', thisCart);
+    //console.log('new Cart', thisCart);
   }
 
   getElements(element) {
@@ -53,7 +53,7 @@ class Cart {
     const thisCart = this;
     /* generate HTML based on template */
     const generatedHTML = templates.cartProduct(menuProduct);
-    console.log('generated html cart:', generatedHTML);
+    //console.log('generated html cart:', generatedHTML);
     /* create element using utils.create elementFromHTML */
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     console.log('generatedDOM :', generatedDOM);
@@ -64,7 +64,7 @@ class Cart {
     //thisCart.products.push(menuProduct);
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
 
-    console.log('thisCart.products', thisCart.products);
+    //console.log('thisCart.products', thisCart.products);
 
   }
 
@@ -77,7 +77,7 @@ class Cart {
     for (const product of thisCart.products) {
       thisCart.totalNumber += product.amount;
       thisCart.subTotalPrice += product.price;
-      console.log('totalNumber,subTotalPrice :', thisCart.totalNumber, thisCart.subTotalPrice);
+      //console.log('totalNumber,subTotalPrice :', thisCart.totalNumber, thisCart.subTotalPrice);
     }
     thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
     thisCart.dom.subTotalPrice.innerHTML = thisCart.subTotalPrice;
@@ -86,7 +86,7 @@ class Cart {
       thisCart.dom.deliveryFee.innerHTML = deliveryFee;
       thisCart.dom.totalPrice.innerHTML = '$' + thisCart.totalPrice;
       thisCart.dom.totalPriceSum.innerHTML = thisCart.totalPrice;
-      console.log('thisCart.totalPrice', thisCart.totalPrice);
+      //console.log('thisCart.totalPrice', thisCart.totalPrice);
     }
   }
 
@@ -114,7 +114,7 @@ class Cart {
     for (let prod of thisCart.products) {
       payload.products.push(prod.getData());
     }
-    console.log('OrderedProducts', payload.products);
+    //console.log('OrderedProducts', payload.products);
 
     const options = {
       method: 'POST',
