@@ -186,9 +186,9 @@ class Booking {
     thisWidget.hourPicker = new HourPicker(thisWidget.dom.hourPicker);
 
     thisBooking.dom.wrapper.addEventListener('updated', function (event) {
-      if (!event.target.classList.contains('table') && 
-      (event.target.classList.contains('date-picker')) || event.target.classList.contains('hour-picker') ||
-      event.target.classList.contains('people-amount')|| event.target.classList.contains('hours-amount')) {
+      if (!event.target.classList.contains('table') &&
+        (event.target.classList.contains('date-picker')) || event.target.classList.contains('hour-picker') ||
+        event.target.classList.contains('people-amount') || event.target.classList.contains('hours-amount')) {
         for (let tableId of thisBooking.dom.tables) {
           if (tableId.getAttribute(settings.booking.tableIdAttribute) == thisBooking.table) {
             tableId.classList.remove(classNames.booking.tableSelected);
@@ -255,7 +255,7 @@ class Booking {
     let payload = {
       date: thisBooking.date,
       hour: thisBooking.hour,
-      table: thisBooking.table,
+      table: parseInt(thisBooking.table),
       duration: thisBooking.hoursAmountWidget.correctValue,
       ppl: thisBooking.peopleAmountWidget.correctValue,
       starters: thisBooking.starter,
@@ -272,8 +272,12 @@ class Booking {
       body: JSON.stringify(payload),
     };
 
-    fetch(url, bookings);
-    thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.table);
+    fetch(url, bookings)
+      .then(function (response) {
+        response.json,
+        thisBooking.makeBooked(thisBooking.date, thisBooking.hour, thisBooking.hoursAmountWidget.correctValue,
+          parseInt(thisBooking.table));
+      });
   }
 
 }
