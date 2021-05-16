@@ -2,6 +2,7 @@ import { settings, select, classNames, templates } from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 
 
 
@@ -12,7 +13,7 @@ const app = {
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
     const idFromHash = window.location.hash.replace('#/', '');
-    console.log('idFromHash',idFromHash);
+    console.log('idFromHash', idFromHash);
 
     let pageMatchingHash = thisApp.pages[0].id;
     for (let page of thisApp.pages) {
@@ -122,15 +123,19 @@ const app = {
 
   },
 
-  initBooking: function(){
+  initBooking: function () {
     /*Find select.containerOf.booking,*/
     const element = document.querySelector(select.containerOf.booking);
-    console.log('element Booking',element);
+    //console.log('element Booking',element);
     new Booking(element);
+  },
+
+  initHome: function () {
+    const wrapper = document.querySelector(select.containerOf.home);
+    new Home(wrapper);
   }
 };
 
-
-
 app.init();
 app.initBooking();
+app.initHome();
