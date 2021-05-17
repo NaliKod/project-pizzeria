@@ -273,13 +273,12 @@ class Booking {
     };
 
     fetch(url, bookings)
-      .then(function (response) {
-        response.json,
+      .then((response)=> {
         thisBooking.makeBooked(thisBooking.date, thisBooking.hour, thisBooking.hoursAmountWidget.correctValue,
-          parseInt(thisBooking.table));
+          thisBooking.table);
+        return response.json;
       });
   }
-
 }
 
 export default Booking;
