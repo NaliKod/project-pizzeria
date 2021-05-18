@@ -239,13 +239,13 @@ class Booking {
             tableId.classList.remove(classNames.booking.tableSelected);
           }
         }
-      }
+      } 
       else {
         event.target.classList.remove(classNames.booking.tableSelected);
       }
     }
     else if (event.target.classList.contains(classNames.booking.tableBooked)) {
-      //alter('This table is already booked');
+      window.alter('This table is already booked');
     }
   }
 
@@ -274,11 +274,13 @@ class Booking {
 
     fetch(url, bookings)
       .then((response)=> {
-        thisBooking.makeBooked(thisBooking.date, thisBooking.hour, thisBooking.hoursAmountWidget.correctValue,
-          thisBooking.table);
         return response.json;
+      })
+      .then(function(response){
+        thisBooking.makeBooked(response.date, response.hour, response.ppl, response.table);
       });
   }
+
 }
 
 export default Booking;
