@@ -239,7 +239,7 @@ class Booking {
             tableId.classList.remove(classNames.booking.tableSelected);
           }
         }
-      } 
+      }
       else {
         event.target.classList.remove(classNames.booking.tableSelected);
       }
@@ -273,11 +273,11 @@ class Booking {
     };
 
     fetch(url, bookings)
-      .then((response)=> {
+      .then(function (response) {
         return response.json;
       })
-      .then(function(response){
-        thisBooking.makeBooked(response.date, response.hour, response.ppl, response.table);
+      .then(function (response) {
+        thisBooking.makeBooked(response.date, utils.numberToHour(response.hour), response.duration, response.table);
       });
   }
 
