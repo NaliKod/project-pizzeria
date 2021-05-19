@@ -118,13 +118,13 @@ class Booking {
 
   updateDOM() {
     const thisBooking = this;
-    thisBooking.date = thisBooking.dataPicker.value;
-    thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
+    const date = thisBooking.dataPicker.value;
+    const hour = utils.hourToNumber(thisBooking.hourPicker.value);
 
     let allAvailable = false;
 
-    if (typeof thisBooking.booked[thisBooking.date] == 'undefined' ||
-      typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined') {
+    if (typeof thisBooking.booked[date] == 'undefined' ||
+      typeof thisBooking.booked[date][hour] == 'undefined') {
       allAvailable = true;
     }
 
@@ -136,9 +136,9 @@ class Booking {
 
       if (!allAvailable
         &&
-        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId) > -1
+        thisBooking.booked[date][hour].includes(tableId)
       ) {
-        table.class.add(classNames.booking.tabelBooked);
+        table.classList.add(classNames.booking.tableBooked);
       }
       else {
         table.classList.remove(classNames.booking.tableBooked);
@@ -181,9 +181,9 @@ class Booking {
     //thisBooking.hoursAmount = thisBooking.hoursAmountWidget.value;
     //});
 
-    const thisWidget = this;
-    thisWidget.dataPicker = new DatePicker(thisWidget.dom.dataPicker);
-    thisWidget.hourPicker = new HourPicker(thisWidget.dom.hourPicker);
+
+    thisBooking.dataPicker = new DatePicker(thisBooking.dom.dataPicker);
+    thisBooking.hourPicker = new HourPicker(thisBooking.dom.hourPicker);
 
     thisBooking.dom.wrapper.addEventListener('updated', function (event) {
       if (!event.target.classList.contains('table') &&
@@ -226,6 +226,13 @@ class Booking {
       }
     });
   }
+  removeSelected() {
+    const thisBooking = this;
+    for (let tableId of thisBooking.dom.tables) {
+      tableId.classList.remove(classNames.booking.tableSelected);
+    }
+    thisBooking.table = null;
+  }
 
   initTables(event) {
     const thisBooking = this;
@@ -253,11 +260,11 @@ class Booking {
     const thisBooking = this;
     const url = settings.db.url + '/' + settings.db.booking;
     let payload = {
-      date: thisBooking.date,
-      hour: thisBooking.hour,
+      date: thisBooking.dataPicker.value,
+      hour: thisBooking.hourPicker.value,
       table: parseInt(thisBooking.table),
-      duration: thisBooking.hoursAmountWidget.correctValue,
-      ppl: thisBooking.peopleAmountWidget.correctValue,
+      duration: thisBooking.hoursAmountWidget.value,
+      ppl: thisBooking.peopleAmountWidget.value,
       starters: thisBooking.starter,
       phone: thisBooking.dom.phone.value,
       address: thisBooking.dom.address.value,
@@ -274,10 +281,13 @@ class Booking {
 
     fetch(url, bookings)
       .then(function (response) {
-        return response.json;
+        return response.json();
       })
       .then(function (response) {
-        thisBooking.makeBooked(response.date, utils.numberToHour(response.hour), response.duration, response.table);
+        console.log('response', response);
+        thisBooking.removeSelected();
+        thisBooking.makeBooked(response.date, response.hour, response.duration, response.table);
+        thisBooking.updateDOM();
       });
   }
 
