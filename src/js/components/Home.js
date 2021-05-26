@@ -1,4 +1,4 @@
-import { templates, select, classNames} from '../settings.js';
+import { templates, select, classNames } from '../settings.js';
 import utils from '../utils.js';
 
 class Home {
@@ -6,6 +6,7 @@ class Home {
     const thisHome = this;
     thisHome.render(wrapper);
     thisHome.initWidgets();
+    thisHome.initCarousel();
   }
 
   render(wrapper) {
@@ -18,13 +19,28 @@ class Home {
     thisHome.dom.order = thisHome.dom.wrapper.querySelector(select.home.order);
     thisHome.dom.book = thisHome.dom.wrapper.querySelector(select.home.book);
     thisHome.dom.pages = document.querySelector(select.containerOf.pages).children;
-    thisHome.dom.pageHome =document.querySelector(select.containerOf.pageHome);
+    thisHome.dom.pageHome = document.querySelector(select.containerOf.pageHome);
     thisHome.dom.navLinks = document.querySelectorAll(select.nav.links);
   }
 
-  initWidgets() { 
+  initCarousel() {
+    let elemCarousel = document.querySelector('.carousel');
+    const flkty = new Flickity(elemCarousel, {
+      // options
+      cellAlign: 'left',
+      contain: true,
+      autoPlay: true,
+      resize: true,
+      prevNextButtons: false,
+    });
+    window.onload = () => {
+      flkty.resize();
+    };
+  }
+
+  initWidgets() {
     const thisHome = this;
-    thisHome.dom.order.addEventListener('click',function(){
+    thisHome.dom.order.addEventListener('click', function () {
       //event.preventDefault();
       //window.location.hash = 'http://localhost:3000/#/order';
 
@@ -40,11 +56,11 @@ class Home {
           link.getAttribute('href') == '#' + 'order'
         );
       }
-      window.location.hash ='#/order';
-  
+      window.location.hash = '#/order';
+
 
     });
-    thisHome.dom.book.addEventListener('click',function(event){
+    thisHome.dom.book.addEventListener('click', function (event) {
       event.preventDefault();
       for (let page of thisHome.dom.pages) {
         page.classList.toggle(classNames.pages.active, page.id == 'booking');

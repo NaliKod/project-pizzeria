@@ -12,7 +12,6 @@
     rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-  <div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true }'></div>
   <link rel="stylesheet" href="css/style.css">
   <link rel="shortcut icon" href="#">
 </head>
@@ -269,25 +268,34 @@
         </div>  
       </div>
       <div class="carousel">
-        <div class="carousel-cell">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/orange-tree.jpg" alt="orange tree" />
-        </div>
-        <div class="carousel-cell">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/one-world-trade.jpg" alt="One World Trade" />
-        </div>
-        <div class="carousel-cell">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/drizzle.jpg" alt="drizzle" />
-        </div>
-      </div>
-      <div class="carouselq">
-        <div class ="carousel-item">
+        <div class ="carousel-cell">
           <div class="item-image">
             <img class="image" src="./images/home/pizza-3.jpg" alt="OPINION">
           </div>
-          <div>
+          <div class="item-description">
             <h3>Best service<h3>
             <p>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum</p>
-            <p>K.Mackenzi</p>
+            <p>- Z. Jarzabek</p>
+          </div>
+        </div>
+        <div class ="carousel-cell">
+          <div class="item-image">
+            <img class="image" src="./images/home/pizza-3.jpg" alt="OPINION">
+          </div>
+          <div class="item-description">
+            <h3>Good snacks<h3>
+            <p>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum</p>
+            <p class="author">- K. Mackenzi</p>
+          </div>
+        </div>
+        <div class ="carousel-cell">
+          <div class="item-image">
+            <img class="image" src="./images/home/pizza-3.jpg" alt="OPINION">
+          </div>
+          <div class="item-description">
+            <h3>Delicious food<h3>
+            <p>Lorem ipsum lorem ipsum Lorem ipsum lorem ipsum Lorem ipsum</p>
+            <p class="author">- M. Wrobel</p>
           </div>
         </div>
       </div>
@@ -315,6 +323,7 @@
     </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
   <script src="vendor/range-slider.min.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>
