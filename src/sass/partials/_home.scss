@@ -120,12 +120,13 @@ $font-bold: 700;
 
 .food {
   margin: 3px 3px;
-  flex: 0 0 33,33%;
+  flex: 0 0 30%;
 }
 
 .food-image {
   border-radius: $radius;
-  width: 200px;
+  height: 150px;
+  width: 210px;
 }
 
 .food-image:hover {
@@ -165,8 +166,8 @@ $font-bold: 700;
 
 .item-description .author p {
   font-size: 14px;
-  font: $font-text;
   font-weight: $font-bold;
+  font: $font-text; 
 }
   
 .item-description h3 {
