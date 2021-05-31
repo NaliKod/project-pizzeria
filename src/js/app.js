@@ -6,6 +6,7 @@ import Home from './components/Home.js';
 
 
 
+
 const app = {
   initPages: function () {
     const thisApp = this;
